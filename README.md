@@ -13,7 +13,7 @@ To run example execute `ruby <filename>`.
 + `task_example.rb`
 Implements background task with `Thread`
 
-+ `queue_task_example.rb`
++ `task_queue_example.rb`
 Implements background task with `Queue`
 
 # Elixir
@@ -26,5 +26,5 @@ Implements background task with `Task`
 + `supervised_task_example.exs`
 Implements background task with `Task.Supervisor`
 
-+ `queue_task_example.exs`
++ `task_queue_example.exs`
 Implements background task with `GenServer`
