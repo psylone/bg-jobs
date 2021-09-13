@@ -1,11 +1,9 @@
-Mix.install([
-  {:plug_cowboy, "~> 2.5.2"}
-])
+defmodule SupervisedTaskExample do
+  @moduledoc false
 
-require Logger
-
-defmodule TaskExample do
   use Plug.Router
+
+  require Logger
 
   plug Plug.Logger
   plug :match
@@ -14,7 +12,12 @@ defmodule TaskExample do
   @workload 3..5
 
   get "/" do
-    Task.start_link(&heavy_work/0)
+    Task.Supervisor.start_child(
+      TaskSup,
+      &heavy_work/0,
+      restart: :transient
+    )
+
     send_resp(conn, :ok, "")
   end
 
@@ -24,7 +27,3 @@ defmodule TaskExample do
     Logger.info("done")
   end
 end
-
-port = 4000
-Plug.Cowboy.http(TaskExample, [], port: port)
-Logger.info("server started at http://127.0.0.1:#{port}")
